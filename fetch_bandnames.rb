@@ -1,10 +1,8 @@
-require 'faraday'
+require 'httparty'
 require 'sqlite3'
 require 'json'
 
-URL='https://script.google.com/macros/s/AKfycbxbAlc8gGgIPyW4wz6xuGZ-asl8sFCtNEzD77kqGoZRsidiERou/'
-
-conn = Faraday.new url: URL
+URL='https://script.google.com/macros/s/AKfycbxbAlc8gGgIPyW4wz6xuGZ-asl8sFCtNEzD77kqGoZRsidiERou/exec'
 
 db = SQLite3::Database.new( "bandnames.db" )
 db.execute <<-SQL
@@ -19,13 +17,15 @@ def parse_sender(text)
   text.split('<')[0].chop
 end
 
+class Connection
+  include HTTParty
+  default_timeout 300
+end
+
 thread = 3
+
 #while resp != false
-  res = conn.get do |req|
-    req.url 'exec', start: thread
-    req.params['end'] = thread
-    req.options[:timeout] = 300
-  end
+  res = Connection.get(URL+"?start=#{thread}&end=#{thread}")
   payload = JSON.parse res.body
   payload.each do |email|
     bandnames = email['body'].gsub("\r").split("\n").map {|name| name unless name.empty?}
