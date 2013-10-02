@@ -31,7 +31,7 @@ thread = 3
     bandnames = email['body'].gsub("\r", '').split("\n").map {|name| name unless name.empty?}
     bandnames.each do |name|
       puts "inserting #{name} by #{parse_sender(email['sender'])}"
-      db.execute "insert into bandnames (name, submitter, date) values (?,?,?)", [name,parsse_sender(email['sender']),email['date']]
+      db.execute "insert into bandnames (name, submitter, date) values (?,?,?)", [name,parse_sender(email['sender']),email['date']]
     end
   end
 #end
