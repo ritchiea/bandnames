@@ -28,7 +28,7 @@ thread = 3
   res = Connection.get(URL+"?start=#{thread}&end=#{thread}")
   payload = JSON.parse res.body
   payload.each do |email|
-    bandnames = email['body'].gsub("\r").split("\n").map {|name| name unless name.empty?}
+    bandnames = email['body'].gsub("\r", '').split("\n").map {|name| name unless name.empty?}
     bandnames.each do |name|
       puts "inserting #{name} by #{parse_sender(email['sender'])}"
       db.execute "insert into bandnames (name, submitter, date) values (?,?,?)", [name,parsse_sender(email['sender']),email['date']]
