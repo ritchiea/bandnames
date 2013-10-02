@@ -22,16 +22,16 @@ class Connection
   default_timeout 300
 end
 
-thread = 3
+thread = 4
 
 #while resp != false
   res = Connection.get(URL+"?start=#{thread}&end=#{thread}")
   payload = JSON.parse res.body
   payload.each do |email|
-    bandnames = email['body'].gsub("\r", '').split("\n").map {|name| name unless name.empty?}
+    bandnames = email['body'].gsub("\r", '').split("\n")
     bandnames.each do |name|
       puts "inserting #{name} by #{parse_sender(email['sender'])}"
-      db.execute "insert into bandnames (name, submitter, date) values (?,?,?)", [name,parse_sender(email['sender']),email['date']]
+      db.execute("insert into bandnames (name, submitter, date) values (?,?,?)", [name,parse_sender(email['sender']),email['date']]) unless name.empty?
     end
   end
 #end
