@@ -1,5 +1,7 @@
 require 'sinatra'
 require 'pg'
+require 'json'
+require 'haml'
 
 get '/' do
   db = PG::Connection.open(dbname: 'bandnames')
@@ -9,7 +11,7 @@ get '/' do
       names << parse_row(row)
     end
   end
-  haml :home, locals: { names: names.to_json }
+  haml :home, format: :html5, locals: { names: JSON.generate(names) }
 end
 
 def parse_row(row)

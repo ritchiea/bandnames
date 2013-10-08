@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+    %title Band Names
+    %link{'rel' => 'stylesheet', 'type' => 'text/css', 'href' => 'css/style.css'}
+    %script{ type: 'text/javascript' }
+      = "window.bandnames = #{names}"
+
+  %body
+    #container
+
+
+    %script{ src: "//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js" }
+    %script
+      window.jQuery || document.write('<script src="js/vendor/jquery-2.0.3.min.js"><\/script>')
+    -#%script{ src: "js/app.js" }
