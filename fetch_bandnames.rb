@@ -1,16 +1,18 @@
 require 'httparty'
-require 'sqlite3'
+require 'pg'
 require 'json'
+require 'time'
 
 URL='https://script.google.com/macros/s/AKfycbxbAlc8gGgIPyW4wz6xuGZ-asl8sFCtNEzD77kqGoZRsidiERou/exec'
 
-db = SQLite3::Database.new( "bandnames.db" )
-db.execute <<-SQL
-  CREATE TABLE IF NOT EXISTS bandnames (
-    name text,
-    submitter text,
-    date text
-    );
+conn = PG::Connection.open(dbname: 'bandnames')
+conn.exec <<-SQL
+  CREATE TABLE IF NOT EXISTS submissions (
+  id SERIAL PRIMARY KEY,
+  name text NOT NULL,
+  sender varchar(255) NOT NULL,
+  time timestamp
+  );
 SQL
 
 def parse_sender(text)
@@ -22,17 +24,18 @@ class Connection
   default_timeout 300
 end
 
-thread = 4
+thread = ARGV[0] || 0
 
-#while resp != false
-  res = Connection.get(URL+"?start=#{thread}&end=#{thread}")
-  payload = JSON.parse res.body
-  payload.each do |email|
-    bandnames = email['body'].gsub("\r", '').split("\n")
-    bandnames.each do |name|
+res = Connection.get(URL+"?start=#{thread}&end=#{thread}")
+payload = JSON.parse res.body
+payload.each do |email|
+  bandnames = email['body'].gsub("\r", '').split("\n")
+  bandnames.each do |name|
+    unless name.empty?
       puts "inserting #{name} by #{parse_sender(email['sender'])}"
-      db.execute("insert into bandnames (name, submitter, date) values (?,?,?)", [name,parse_sender(email['sender']),email['date']]) unless name.empty?
+      conn.exec_params("INSERT INTO submissions (name,sender,time) VALUES ($1, $2, $3)",
+                       [{ value:name },{ value: parse_sender(email['sender']) },{ value: Time.parse(email['date']) }])
     end
   end
-#end
+end
 
