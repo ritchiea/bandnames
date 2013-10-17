@@ -3,7 +3,7 @@
 
   jQuery(function($) {
     var $body, divIt, names;
-    names = window.bandnames;
+    names = _.shuffle(window.bandnames);
     $body = $('body');
     divIt = function(submission) {
       var div;

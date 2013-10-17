@@ -1,5 +1,5 @@
 jQuery ($) ->
-  names = window.bandnames
+  names = _.shuffle window.bandnames
   $body = $('body')
 
   divIt = (submission) ->
