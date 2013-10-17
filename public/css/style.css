@@ -10,7 +10,15 @@ body {
   margin-right: 20px; }
 
 .sender {
-  display: none; }
+  display: none;
+  background-color: #5B59BA;
+  color: #CCCCFF;
+  padding: 10px; }
+  .sender p {
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+    display: block; }
 
 .bandname {
   display: inline; }

@@ -16,3 +16,7 @@ tmp
 .yardoc
 _yardoc
 doc/
+*.json
+*.db
+*.out
+.sass-cache

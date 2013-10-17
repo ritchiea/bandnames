@@ -9,6 +9,7 @@ jQuery ($) ->
             #{submission.name}
             </div>
             <div class='sender'>
+            <p class='bandname-focus'>#{submission.name}</p>
             <p class='sender-name'>#{submission.sender}</p>
             <p class='time'>#{submission.time}</p>
             </div>
@@ -18,3 +19,9 @@ jQuery ($) ->
 
   names.forEach (submission) ->
     $body.append divIt(submission)
+
+  $(document).on 'mouseenter', '.name-container', (e) ->
+    $(@).find('.sender').fadeToggle(100)
+
+  $(document).on 'mouseleave', '.name-container', (e) ->
+    $(@).find('.sender').fadeToggle(100)
