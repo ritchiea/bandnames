@@ -8,7 +8,7 @@ get '/' do
   db = PG::Connection.open(dbname: 'bandnames')
   names = []
   db.exec 'select * from submissions' do |result|
-    result.each_row { |row| names << parse_row(row) }
+    result.each_row { |row| ( names << parse_row(row) ) unless row[1].empty? }
   end
   haml :home, format: :html5, locals: { names: JSON.generate(names) }
 end
