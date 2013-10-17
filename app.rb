@@ -2,6 +2,7 @@ require 'sinatra'
 require 'pg'
 require 'json'
 require 'haml'
+require 'time'
 
 get '/' do
   db = PG::Connection.open(dbname: 'bandnames')
@@ -16,5 +17,5 @@ def parse_row(row)
   {id: row[0],
    name: row[1],
    sender: row[2],
-   time: row[3] }
+   time: Time.parse(row[3]).strftime('%l:%M %P %A, %B %-d, %Y') }
 end
