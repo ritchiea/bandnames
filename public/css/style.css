@@ -1,29 +1,39 @@
 body {
-  background-color: #1E90FF;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-weight: 300;
-  color: #ccc;
+  background-color: #251129;
+  font-family: Helvetica;
+  font-weight: 400;
+  color: #F3B466;
   font-size: 18pt;
   width: 300%; }
 
 .name-container {
-  display: inline-block;
-  margin-right: 30px;
-  margin-bottom: 8px; }
+  float: left;
+  margin-right: 80px;
+  margin-bottom: 48px; }
   .name-container:hover {
     cursor: pointer; }
 
-.sender {
+.detail {
+  border-radius: 50%;
+  border: 1px solid #3B1B3D;
+  text-align: center;
+  opacity: 0.97;
   display: none;
-  background-color: #5B59BA;
-  color: #CCCCFF;
+  position: absolute;
+  margin-top: -240px;
+  margin-right: -190px;
+  z-index: 101;
+  background-color: #4DA69B;
+  color: #F06764;
   padding: 10px; }
-  .sender p {
+  .detail p {
+    opacity: 1;
     margin-left: auto;
     margin-right: auto;
-    width: 75%;
+    font-weight: 600;
+    max-width: 75%;
     display: block; }
-    .sender p:hover {
+    .detail p:hover {
       cursor: pointer; }
 
 .bandname {
