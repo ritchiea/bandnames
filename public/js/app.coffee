@@ -8,10 +8,9 @@ jQuery ($) ->
             <div class='bandname'>
             #{submission.name}
             </div>
-            <div class='sender'>
+            <div class='detail'>
             <p class='bandname-focus'>#{submission.name}</p>
-            <p class='sender-name'>#{submission.sender}</p>
-            <p class='time'>#{submission.time}</p>
+            <p class='time'>#{submission.time} by #{submission.sender}</p>
             </div>
           </div>
           """
@@ -21,7 +20,9 @@ jQuery ($) ->
     $body.append divIt(submission)
 
   $(document).on 'mouseenter', '.name-container', (e) ->
-    $(@).find('.sender').fadeToggle(100)
+    $deet = $(@).find('.detail')
+    $deet.fadeToggle(100)
+    console.log $deet.offset()
 
   $(document).on 'mouseleave', '.name-container', (e) ->
-    $(@).find('.sender').fadeToggle(100)
+    $(@).find('.detail').fadeToggle(100)
